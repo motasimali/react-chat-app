@@ -19,7 +19,7 @@ function AuthReducer(state, action) {
         error: true,
       }
     case 'LOGOUT':
-      localStorage.removeItem('user')
+      sessionStorage.removeItem('user')
 
       return { ...state, user: null }
     default:
