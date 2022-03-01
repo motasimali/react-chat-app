@@ -1,7 +1,6 @@
 import {
   GET_MESSAGES,
   MESSAGES_LOADING,
-  POST_MESSAGE,
   SET_NEW_MESSAGE,
   SET_PAGE,
 } from './messages.types'
@@ -16,21 +15,6 @@ export const getMessages = (payload) => async (dispatch) => {
   dispatch({
     type: GET_MESSAGES,
     payload: messages,
-    totalMessages: allMessages.length,
-    totalPages: Math.ceil(allMessages.length / paginationSize),
-  })
-}
-
-export const postMessage = (message) => async (dispatch) => {
-  dispatch({
-    type: MESSAGES_LOADING,
-  })
-  const allMessages = JSON.parse(localStorage.getItem('messages')) || []
-  allMessages.push(message)
-  localStorage.setItem('messages', JSON.stringify(allMessages))
-  dispatch({
-    type: POST_MESSAGE,
-    payload: message,
     totalMessages: allMessages.length,
     totalPages: Math.ceil(allMessages.length / paginationSize),
   })

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types'
 function TopHeaderComponent({ text }) {
   return (
     <div className="topHeaderContainer">
-      <p className="topHeaderText">{text}</p>
+      <p className="topHeaderText pt-3">{text}</p>
     </div>
   )
 }

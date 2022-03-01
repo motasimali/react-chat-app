@@ -3,7 +3,6 @@ import {
   MESSAGES_ERROR,
   MESSAGES_LOADING,
   GET_MESSAGES,
-  POST_MESSAGE,
   SET_PAGE,
   SET_NEW_MESSAGE,
 } from './messages.types'
@@ -29,14 +28,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         pageIndex: action.payload,
-      }
-    case POST_MESSAGE:
-      return {
-        ...state,
-        loading: false,
-        messages: [...state.messages, action.payload],
-        totalMessages: action.totalMessages,
-        totalPages: action.totalPages,
       }
     case GET_MESSAGES:
       return {
