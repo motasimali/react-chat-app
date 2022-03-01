@@ -6,7 +6,6 @@ import { AuthContext } from '../../context/AuthContext'
 import './Messenger.css'
 import {
   getMessages,
-  postMessage,
   setNewMessage,
   setPage,
 } from '../../redux/messages/messages.actions'
@@ -17,12 +16,10 @@ function MessengerPage({
   messages,
   loading,
   getAllMessages,
-  postNewMessage,
   pageIndex,
   totalPages,
   setMessagesPage,
   setArrivingMessage,
-  // totalMessages,
 }) {
   const scrollRef = useRef()
   const { user } = useContext(AuthContext)
@@ -83,7 +80,7 @@ function MessengerPage({
                 )}
               </div>
               <div className="chatBoxBottom">
-                <SendTextFormComponent postNewMessage={postNewMessage} />
+                <SendTextFormComponent />
               </div>
             </div>
           </div>
@@ -111,9 +108,7 @@ MessengerPage.propTypes = {
   loading: PropTypes.bool,
   pageIndex: PropTypes.number,
   totalPages: PropTypes.number,
-  // totalMessages: PropTypes.number,
   getAllMessages: PropTypes.func.isRequired,
-  postNewMessage: PropTypes.func.isRequired,
   setMessagesPage: PropTypes.func.isRequired,
   setArrivingMessage: PropTypes.func.isRequired,
 }

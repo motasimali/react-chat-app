@@ -15,7 +15,6 @@ function SendTextFormComponent() {
         text: textArea.current.value,
         createdDate: parseDateToISO(new Date()),
       }
-      // postNewMessage(message)
       channel.postMessage(message)
       textArea.current.value = ''
     }
