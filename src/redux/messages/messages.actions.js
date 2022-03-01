@@ -2,7 +2,7 @@ import {
   GET_MESSAGES,
   MESSAGES_LOADING,
   POST_MESSAGE,
-  REFRESH_MESSAGES,
+  SET_NEW_MESSAGE,
   SET_PAGE,
 } from './messages.types'
 
@@ -42,9 +42,14 @@ export const setPage = (page) => async (dispatch) => {
   })
 }
 
-export const setIsRefreshing = (refreshing) => async (dispatch) => {
+export const setNewMessage = (message) => async (dispatch) => {
+  const allMessages = JSON.parse(localStorage.getItem('messages')) || []
+  allMessages.push(message)
+  localStorage.setItem('messages', JSON.stringify(allMessages))
   dispatch({
-    type: REFRESH_MESSAGES,
-    payload: refreshing,
+    type: SET_NEW_MESSAGE,
+    payload: message,
+    totalMessages: allMessages.length,
+    totalPages: Math.ceil(allMessages.length / paginationSize),
   })
 }

@@ -1,12 +1,12 @@
 import React, { useContext, useRef } from 'react'
-import PropTypes from 'prop-types'
 import './SendTextForm.css'
 import { Form } from 'react-bootstrap'
 import { AuthContext } from '../../context/AuthContext'
 import { parseDateToISO } from '../../utils/utils'
-function SendTextFormComponent({ postNewMessage }) {
+function SendTextFormComponent() {
   const { user } = useContext(AuthContext)
   const textArea = useRef()
+  const channel = new BroadcastChannel('app-data')
   const handleOnChange = (e) => {
     if (e.key === 'Enter' && e.target.value) {
       e.preventDefault()
@@ -15,7 +15,8 @@ function SendTextFormComponent({ postNewMessage }) {
         text: textArea.current.value,
         createdDate: parseDateToISO(new Date()),
       }
-      postNewMessage(message)
+      // postNewMessage(message)
+      channel.postMessage(message)
       textArea.current.value = ''
     }
   }
@@ -32,8 +33,5 @@ function SendTextFormComponent({ postNewMessage }) {
       </Form.Group>
     </Form>
   )
-}
-SendTextFormComponent.propTypes = {
-  postNewMessage: PropTypes.func.isRequired,
 }
 export default SendTextFormComponent

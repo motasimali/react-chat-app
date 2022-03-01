@@ -5,7 +5,7 @@ import {
   GET_MESSAGES,
   POST_MESSAGE,
   SET_PAGE,
-  REFRESH_MESSAGES,
+  SET_NEW_MESSAGE,
 } from './messages.types'
 
 const INITIAL_STATE = {
@@ -18,9 +18,12 @@ const INITIAL_STATE = {
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case REFRESH_MESSAGES:
+    case SET_NEW_MESSAGE:
       return {
         ...state,
+        messages: [...state.messages, action.payload],
+        totalMessages: action.totalMessages,
+        totalPages: action.totalPages,
       }
     case SET_PAGE:
       return {

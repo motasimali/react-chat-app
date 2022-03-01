@@ -7,6 +7,7 @@ import './Messenger.css'
 import {
   getMessages,
   postMessage,
+  setNewMessage,
   setPage,
 } from '../../redux/messages/messages.actions'
 import MessageComponent from '../../components/Message/Message'
@@ -20,11 +21,12 @@ function MessengerPage({
   pageIndex,
   totalPages,
   setMessagesPage,
+  setArrivingMessage,
   // totalMessages,
 }) {
   const scrollRef = useRef()
   const { user } = useContext(AuthContext)
-
+  const channel = new BroadcastChannel('app-data')
   const [loadingMore, setLoadingMore] = useState(false)
 
   const loadMore = () => {
@@ -32,14 +34,15 @@ function MessengerPage({
     setMessagesPage(pageIndex + 1)
   }
   useEffect(() => {
+    channel.onmessage = (event) => {
+      setArrivingMessage(event.data)
+    }
+  }, [])
+  useEffect(() => {
     const payload = {
       pageIndex,
     }
     getAllMessages(payload)
-    // const interval = setInterval(() => getAllMessages(payload), 5000)
-    // return () => {
-    //   clearInterval(interval)
-    // }
   }, [getAllMessages, pageIndex])
   useEffect(() => {
     if (!loadingMore) {
@@ -101,6 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
   getAllMessages: (payload) => dispatch(getMessages(payload)),
   postNewMessage: (message) => dispatch(postMessage(message)),
   setMessagesPage: (page) => dispatch(setPage(page)),
+  setArrivingMessage: (message) => dispatch(setNewMessage(message)),
 })
 MessengerPage.propTypes = {
   messages: PropTypes.array,
@@ -111,5 +115,6 @@ MessengerPage.propTypes = {
   getAllMessages: PropTypes.func.isRequired,
   postNewMessage: PropTypes.func.isRequired,
   setMessagesPage: PropTypes.func.isRequired,
+  setArrivingMessage: PropTypes.func.isRequired,
 }
 export default connect(mapStateToProps, mapDispatchToProps)(MessengerPage)
