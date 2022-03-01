@@ -5,16 +5,19 @@ import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { AuthContextProvider } from './context/AuthContext'
 
 import store from './redux/store'
 
 ReactDOM.render(
-  <BrowserRouter>
-    <React.StrictMode>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </React.StrictMode>
-  </BrowserRouter>,
+  <AuthContextProvider>
+    <BrowserRouter>
+      <React.StrictMode>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </React.StrictMode>
+    </BrowserRouter>
+  </AuthContextProvider>,
   document.getElementById('root'),
 )
